@@ -31,6 +31,9 @@ import static org.lappsgrid.discriminator.Discriminators.Uri;
 public class DatabaseService implements WebService
 {
 	private static final String DATABASE_URL = "jdbc:postgresql://localhost/langrid";
+	private static final String USERNAME = "langrid";
+	private static final String PASSWORD = "langrid";
+
 	private final Logger logger = LoggerFactory.getLogger(DatabaseService.class);
 	private String metadata;
 
@@ -80,7 +83,7 @@ public class DatabaseService implements WebService
 	public String execute(String input)
 	{
 		logger.debug("Request received.");
-		Map<String, String> params = null;
+//		Map<String, String> params = null;
 		Data data = null;
 		try
 		{
@@ -93,27 +96,27 @@ public class DatabaseService implements WebService
 		}
 
 		Object payload = data.getPayload();
-		logger.debug("Payload is a {}", payload.getClass().getName());
-		params = (Map) payload;
-		String username = params.get("username");
-		if (username == null)
-		{
-			logger.error("Request did not contain a username");
-			return DataFactory.error("No username provided.");
-		}
-		String password = params.get("password");
-		if (password == null)
-		{
-			logger.error("Request did not contain a password");
-			return DataFactory.error("No password provided.");
-		}
+//		logger.debug("Payload is a {}", payload.getClass().getName());
+//		params = (Map) payload;
+//		String username = params.get("username");
+//		if (username == null)
+//		{
+//			logger.error("Request did not contain a username");
+//			return DataFactory.error("No username provided.");
+//		}
+//		String password = params.get("password");
+//		if (password == null)
+//		{
+//			logger.error("Request did not contain a password");
+//			return DataFactory.error("No password provided.");
+//		}
 
 		Connection connection = null;
 		Statement statement = null;
 		List<Map> list = new ArrayList<>();
 		try
 		{
-			connection = DriverManager.getConnection(DATABASE_URL, username, password);
+			connection = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
 			statement = connection.createStatement();
 			ResultSet result = statement.executeQuery("select * from service");
 			logger.debug("Query executed.");
